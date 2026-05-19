@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CardOrbit — Premium Credit Card Optimization</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <style>
+    :root {
+      --bg-primary: #0b1020;
+      --bg-secondary: #111827;
+      --card-bg: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08);
+      --text-primary: #f9fafb;
+      --text-secondary: #9ca3af;
+      --accent-1: #7c3aed;
+      --accent-2: #06b6d4;
+      --gold: #d4af37;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+    }
+
+    .navbar {
+      backdrop-filter: blur(18px);
+      background: rgba(0,0,0,0.3);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar-brand {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .nav-link:hover {
+      color: white;
+    }
+
+    .hero {
+      padding: 140px 0 100px;
+      position: relative;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .hero p {
+      color: var(--text-secondary);
+      font-size: 1.15rem;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .btn-primary-custom {
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      border: none;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 14px;
+      font-weight: 600;
+      transition: 0.3s ease;
+      box-shadow: 0 0 30px rgba(124,58,237,0.3);
+    }
+
+    .btn-primary-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(124,58,237,0.5);
+    }
+
+    .btn-outline-custom {
+      border: 1px solid var(--border);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 14px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+      border-radius: 24px;
+      transition: 0.3s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255,255,255,0.15);
+    }
+
+    .feature-card {
+      padding: 32px;
+      height: 100%;
+    }
+
+    .feature-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+    }
+
+    section {
+      padding: 90px 0;
+    }
+
+    .section-title {
+      font-size: 2.7rem;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: auto;
+    }
+
+    .pricing-card {
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .pricing-card.popular {
+      border: 1px solid rgba(124,58,237,0.6);
+      box-shadow: 0 0 40px rgba(124,58,237,0.2);
+    }
+
+    .badge-popular {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .price {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 20px 0;
+    }
+
+    .currency-grid {
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .pricing-features li {
+      margin-bottom: 14px;
+      color: var(--text-secondary);
+      list-style: none;
+    }
+
+    .pricing-features i {
+      color: var(--gold);
+      margin-right: 10px;
+    }
+
+    .stat-box {
+      padding: 30px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: white;
+    }
+
+    .faq-item {
+      padding: 28px;
+    }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 60px 0 30px;
+    }
+
+    .support-box {
+      padding: 35px;
+    }
+
+    .buy-btn {
+      width: 100%;
+      margin-top: 24px;
+    }
+
+    .setup-box {
+      padding: 40px;
+      text-align: center;
+    }
+
+    .tracking-form input {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: white;
+      padding: 14px;
+      border-radius: 12px;
+    }
+
+    .tracking-form input::placeholder {
+      color: var(--text-secondary);
+    }
+
+    .support-form input,
+    .support-form textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: white;
+      padding: 14px;
+      border-radius: 12px;
+    }
+
+    .support-form textarea {
+      min-height: 140px;
+    }
+
+    @media(max-width: 768px) {
+      .hero h1 {
+        font-size: 2.8rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">CardOrbit</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
+        <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+        <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+        <li class="nav-item"><a class="nav-link" href="#how">How It Works</a></li>
+        <li class="nav-item"><a class="nav-link" href="#support">Support</a></li>
+        <li class="nav-item"><a class="btn btn-outline-custom" href="#pricing">Buy Now</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="hero text-center">
+  <div class="container">
+    <h1>
+      Your Credit Cards Are <span class="gradient-text">Leaving Money</span> on the Table.
+    </h1>
+
+    <p>
+      Track lounge eligibility, milestone spends, cashback, annual fee waivers, and reward optimization across all your cards — without complicated spreadsheets.
+    </p>
+
+    <div class="d-flex justify-content-center flex-wrap gap-3 mt-5">
+      <a href="#pricing" class="btn btn-primary-custom">Start Tracking</a>
+      <a href="#support" class="btn btn-outline-custom">Request Setup</a>
+    </div>
+
+    <div class="row mt-5 g-4">
+      <div class="col-md-3">
+        <div class="glass-card stat-box">
+          <div class="stat-number">24hrs</div>
+          <div class="text-secondary">Workspace Delivery</div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="glass-card stat-box">
+          <div class="stat-number">∞</div>
+          <div class="text-secondary">Unlimited Cards</div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="glass-card stat-box">
+          <div class="stat-number">100%</div>
+          <div class="text-secondary">Private Workspaces</div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="glass-card stat-box">
+          <div class="stat-number">Global</div>
+          <div class="text-secondary">Multi Currency</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Built for Credit Card Power Users</h2>
+      <p class="section-subtitle">
+        From premium travel cards to cashback optimizers, CardOrbit centralizes your entire rewards ecosystem.
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="glass-card feature-card">
+          <div class="feature-icon"><i class="bi bi-airplane"></i></div>
+          <h4>Smart Lounge Tracking</h4>
+          <p class="text-secondary mt-3">Automatically monitor rolling spends and airport lounge eligibility across cards.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="glass-card feature-card">
+          <div class="feature-icon"><i class="bi bi-cash-stack"></i></div>
+          <h4>Reward Optimization</h4>
+          <p class="text-secondary mt-3">Track cashback, milestone bonuses, annual fee waivers, and reward points effortlessly.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="glass-card feature-card">
+          <div class="feature-icon"><i class="bi bi-speedometer2"></i></div>
+          <h4>Unified Dashboard</h4>
+          <p class="text-secondary mt-3">Manage all your cards from a premium centralized dashboard experience.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="glass-card feature-card">
+          <div class="feature-icon"><i class="bi bi-bell"></i></div>
+          <h4>Automated Alerts</h4>
+          <p class="text-secondary mt-3">Never miss overdue payments, milestone deadlines, or reward unlocks again.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="glass-card feature-card">
+          <div class="feature-icon"><i class="bi bi-lock"></i></div>
+          <h4>Private Workspaces</h4>
+          <p class="text-secondary mt-3">Every customer receives isolated tracking workspaces with protected backend automation.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="glass-card feature-card">
+          <div class="feature-icon"><i class="bi bi-lightning"></i></div>
+          <h4>Quick Monthly Updates</h4>
+          <p class="text-secondary mt-3">Update monthly spends in seconds using guided forms without tracking transactions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-subtitle">Simple onboarding. Powerful tracking.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="glass-card feature-card text-center">
+          <div class="feature-icon mx-auto"><i class="bi bi-person-plus"></i></div>
+          <h5>1. Purchase Plan</h5>
+          <p class="text-secondary mt-3">Choose your subscription and complete payment securely.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="glass-card feature-card text-center">
+          <div class="feature-icon mx-auto"><i class="bi bi-credit-card"></i></div>
+          <h5>2. Add Cards</h5>
+          <p class="text-secondary mt-3">Submit your credit card portfolio securely using onboarding forms.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="glass-card feature-card text-center">
+          <div class="feature-icon mx-auto"><i class="bi bi-gear"></i></div>
+          <h5>3. Setup</h5>
+          <p class="text-secondary mt-3">Your personalized workspace is configured within 24 hours.</p>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="glass-card feature-card text-center">
+          <div class="feature-icon mx-auto"><i class="bi bi-graph-up-arrow"></i></div>
+          <h5>4. Optimize</h5>
+          <p class="text-secondary mt-3">Track rewards, lounge access, milestones, and annual fee waivers automatically.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Simple Transparent Pricing</h2>
+      <p class="section-subtitle">
+        Premium tracking for every type of credit card user.
+      </p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+      <div class="col-lg-4">
+        <div class="glass-card pricing-card">
+          <h3>Essential</h3>
+          <p class="text-secondary">Perfect for single-card users</p>
+
+          <div class="price">$1<span class="fs-6 text-secondary">/mo</span></div>
+
+          <div class="currency-grid">
+            ₹89/mo • £0.99/mo • €0.99/mo
+          </div>
+
+          <ul class="pricing-features mt-4">
+            <li><i class="bi bi-check-circle-fill"></i>1 Credit Card</li>
+            <li><i class="bi bi-check-circle-fill"></i>Lounge Tracking</li>
+            <li><i class="bi bi-check-circle-fill"></i>Monthly Spend Tracking</li>
+            <li><i class="bi bi-check-circle-fill"></i>Reward Monitoring</li>
+            <li><i class="bi bi-check-circle-fill"></i>Private Workspace</li>
+          </ul>
+
+          <button class="btn btn-primary-custom buy-btn" onclick="buyPlan('Essential')">
+            Buy Now
+          </button>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="glass-card pricing-card popular">
+          <div class="badge-popular">MOST POPULAR</div>
+
+          <h3>Starter</h3>
+          <p class="text-secondary">For multi-card users</p>
+
+          <div class="price">$4.99<span class="fs-6 text-secondary">/mo</span></div>
+
+          <div class="currency-grid">
+            ₹299/mo • £3.99/mo • €4.49/mo
+          </div>
+
+          <ul class="pricing-features mt-4">
+            <li><i class="bi bi-check-circle-fill"></i>Up to 10 Cards</li>
+            <li><i class="bi bi-check-circle-fill"></i>Advanced Dashboard</li>
+            <li><i class="bi bi-check-circle-fill"></i>Smart Alerts</li>
+            <li><i class="bi bi-check-circle-fill"></i>Cashback Tracking</li>
+            <li><i class="bi bi-check-circle-fill"></i>Reward Optimization</li>
+          </ul>
+
+          <button class="btn btn-primary-custom buy-btn" onclick="buyPlan('Starter')">
+            Buy Now
+          </button>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="glass-card pricing-card">
+          <h3>Pro</h3>
+          <p class="text-secondary">For power users & travelers</p>
+
+          <div class="price">$11.99<span class="fs-6 text-secondary">/mo</span></div>
+
+          <div class="currency-grid">
+            ₹799/mo • £9.99/mo • €10.99/mo
+          </div>
+
+          <ul class="pricing-features mt-4">
+            <li><i class="bi bi-check-circle-fill"></i>Unlimited Cards</li>
+            <li><i class="bi bi-check-circle-fill"></i>Milestone Tracking</li>
+            <li><i class="bi bi-check-circle-fill"></i>Priority Support</li>
+            <li><i class="bi bi-check-circle-fill"></i>Fee Waiver Tracking</li>
+            <li><i class="bi bi-check-circle-fill"></i>Advanced Insights</li>
+          </ul>
+
+          <button class="btn btn-primary-custom buy-btn" onclick="buyPlan('Pro')">
+            Buy Now
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-5 justify-content-center">
+      <div class="col-lg-8">
+        <div class="glass-card setup-box">
+          <h3>Personalized Setup Included</h3>
+          <p class="text-secondary mt-3">
+            Every workspace is manually configured and optimized for your specific card portfolio.
+          </p>
+
+          <h4 class="mt-4 gradient-text">
+            Additional Setup Fee:
+            $1 / ₹80 / £0.80 / €0.90 per card
+          </h4>
+
+          <p class="text-secondary mt-3">
+            Example: 5 cards = $5 onboarding setup
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="glass-card support-box h-100">
+          <h3>Order Tracking</h3>
+          <p class="text-secondary mt-3">
+            Track your workspace setup progress and onboarding status.
+          </p>
+
+          <form class="tracking-form mt-4">
+            <input type="email" class="form-control mb-3" placeholder="Enter your email">
+            <button type="button" class="btn btn-primary-custom w-100">
+              Track Order
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="glass-card support-box h-100">
+          <h3>About CardOrbit</h3>
+
+          <p class="text-secondary mt-4">
+            CardOrbit was built to solve one frustrating problem — missing valuable credit card benefits because tracking them manually was painful.
+          </p>
+
+          <p class="text-secondary">
+            From airport lounge eligibility to milestone spends and annual fee waivers, CardOrbit helps you centralize and optimize your entire credit card ecosystem.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="support">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-title">Support & Suggestions</h2>
+      <p class="section-subtitle">
+        Questions, setup requests, partnerships, or feature ideas — we’d love to hear from you.
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-5">
+        <div class="glass-card support-box h-100">
+          <h3>Contact Support</h3>
+
+          <div class="mt-4">
+            <p><i class="bi bi-envelope me-2"></i>support@yourdomain.com</p>
+            <p><i class="bi bi-clock me-2"></i>Average response within 24 hours</p>
+            <p><i class="bi bi-lightbulb me-2"></i>feedback@yourdomain.com</p>
+          </div>
+
+          <div class="mt-5">
+            <h5>Workspace Delivery</h5>
+            <p class="text-secondary mt-3">
+              Most customer workspaces are fully configured within 24 hours after successful payment.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+        <div class="glass-card support-box">
+          <h3>Write To Us</h3>
+
+          <form class="support-form mt-4">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <input type="text" class="form-control" placeholder="Your Name">
+              </div>
+
+              <div class="col-md-6">
+                <input type="email" class="form-control" placeholder="Your Email">
+              </div>
+
+              <div class="col-12">
+                <textarea class="form-control" placeholder="Message"></textarea>
+              </div>
+
+              <div class="col-12">
+                <button type="button" class="btn btn-primary-custom w-100">
+                  Send Message
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="text-center">
+      <h2 class="section-title">Stop Missing Rewards You Already Earned.</h2>
+
+      <p class="section-subtitle mt-3">
+        Upgrade the way you manage your credit cards.
+      </p>
+
+      <div class="d-flex justify-content-center gap-3 flex-wrap mt-5">
+        <a href="#pricing" class="btn btn-primary-custom">Get Started</a>
+        <a href="#support" class="btn btn-outline-custom">Contact Support</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container text-center">
+    <h4 class="mb-3">CardOrbit</h4>
+
+    <p class="text-secondary">
+      Premium Credit Card Optimization Platform
+    </p>
+
+    <div class="d-flex justify-content-center gap-4 mt-4 flex-wrap">
+      <a href="#" class="text-decoration-none text-secondary">Privacy Policy</a>
+      <a href="#" class="text-decoration-none text-secondary">Terms</a>
+      <a href="#support" class="text-decoration-none text-secondary">Support</a>
+    </div>
+
+    <p class="text-secondary mt-5 mb-0">
+      © 2026 CardOrbit. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  function buyPlan(plan) {
+
+    // Replace with your Razorpay flow
+
+    alert(`Proceeding to payment for ${plan} plan.`);
+
+    // Example:
+    // window.location.href = 'YOUR_RAZORPAY_LINK';
+  }
+</script>
+
+</body>
+</html>
